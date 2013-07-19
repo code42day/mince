@@ -1,15 +1,18 @@
 {
   "name": "mince",
   "version": "0.0.1",
-  "description": "Opinionated CLI for mincer",
+  "description": "Traditional CLI for mincer",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": "",
+  "bin": "./bin/mince",
+  "repository": "https://github.com/code42day/mince.git",
   "keywords": [
     "mincer"
   ],
   "author": "Damian Krzeminski <pirxpilot@code42day.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "mincer": "~0.4.6",
+    "optimist": "~0.6.0",
+    "async": "~0.2.9"
+  }
 }

@@ -1,0 +1,15 @@
+{
+  "name": "mince",
+  "version": "0.0.1",
+  "description": "Opinionated CLI for mincer",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "keywords": [
+    "mincer"
+  ],
+  "author": "Damian Krzeminski <pirxpilot@code42day.com>",
+  "license": "MIT"
+}

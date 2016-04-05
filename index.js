@@ -1,8 +1,6 @@
 var fs = require('fs');
 var path = require('path');
 
-var async = require('async');
-
 var argv = require('optimist')
   .usage('Mince files and place them in destination directory.\nUsage: $0 [options] file..')
   .describe('destination', 'Location of minced files')
@@ -29,27 +27,18 @@ function environment(include) {
 
 function mince(environment, src, destination) {
   src = toArray(src);
-  async.each(src, function(s, fn) {
+  src.forEach(function(s) {
     var asset = environment.findAsset(s);
     if (!asset) {
-      return fn('Cannot find: ' + s);
+      throw 'Cannot find: ' + s;
     }
-
-    asset.compile(function(err) {
-      if (err) {
-        return fn(err);
-      }
-
-      fs.writeFile(path.join(destination, s), asset.buffer, fn);
-    });
-
-
-  }, function(err) {
-    if(err) {
-      console.error(err);
-      process.exit(1);
-    }
+    fs.writeFileSync(path.join(destination, s), asset.toString());
   });
 }
 
-mince(environment(argv.include), argv._, argv.destination);
+try {
+  mince(environment(argv.include), argv._, argv.destination);
+} catch(e) {
+  console.error(e);
+  process.exit(1);
+}

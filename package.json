@@ -1,6 +1,6 @@
 {
   "name": "mince",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Traditional CLI for mincer",
   "main": "index.js",
   "bin": "./bin/mince",

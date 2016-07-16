@@ -11,8 +11,7 @@
   "author": "Damian Krzeminski <pirxpilot@code42day.com>",
   "license": "MIT",
   "dependencies": {
-    "mincer": "~0.4.6",
-    "optimist": "~0.6.0",
-    "async": "~0.2.9"
+    "mincer": "~1",
+    "optimist": "~0.6.0"
   }
 }

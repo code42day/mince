@@ -29,6 +29,18 @@ function environment(include) {
   return environment;
 }
 
+function writeFile(path, data) {
+  var output = fs.createWriteStream(path);
+  data.split('\n').forEach(function(line) {
+    // remove processing directives
+    if (!line.startsWith('//(=)')) {
+      output.write(line);
+      output.write('\n')
+    }
+  });
+  output.end();
+}
+
 function mince(environment, src, destination) {
   src = toArray(src);
   src.forEach(function(s) {
@@ -36,7 +48,7 @@ function mince(environment, src, destination) {
     if (!asset) {
       throw 'Cannot find: ' + s;
     }
-    fs.writeFileSync(path.join(destination, s), asset.toString());
+    writeFile(path.join(destination, s), asset.toString());
   });
 }
 

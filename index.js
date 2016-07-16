@@ -11,6 +11,10 @@ var argv = require('optimist')
   .argv;
 
 var mincer = require('mincer');
+var DebugComments = require('./lib/debug-comments.js');
+
+
+mincer.registerPostProcessor('application/javascript', DebugComments);
 
 function toArray(a) {
   return Array.isArray(a) ? a : [a];

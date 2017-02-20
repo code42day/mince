@@ -4,11 +4,11 @@
   "description": "Traditional CLI for mincer",
   "main": "index.js",
   "bin": "./bin/mince",
-  "repository": "https://github.com/code42day/mince.git",
+  "repository": "https://github.com/pirxpilot/mince.git",
   "keywords": [
     "mincer"
   ],
-  "author": "Damian Krzeminski <pirxpilot@code42day.com>",
+  "author": "Damian Krzeminski <pirxpilot@furkot.com>",
   "license": "MIT",
   "dependencies": {
     "mincer": "~1",

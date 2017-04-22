@@ -9,7 +9,6 @@ Builds multiple scripts during one mincer invocation.
 
 npm install mince
 
-
 ## Usage
 
     mince [options] file..
@@ -21,3 +20,11 @@ Add include directoris
 ### --destination|-d
 
 Directory to which minces files are build
+
+### --source-map
+
+Name of the generated source map.
+
+### --source-root
+
+Common path prefix for files include in source map.

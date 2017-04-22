@@ -13,5 +13,10 @@
   "dependencies": {
     "mincer": "~1",
     "optimist": "~0.6.0"
-  }
+  },
+  "files": [
+    "index.js",
+    "bin",
+    "lib"
+  ]
 }

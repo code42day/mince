@@ -1,4 +1,11 @@
 
+1.1.0 / 2017-04-22
+==================
+
+ * add basic support for source maps
+ * add `files` entry to package.json
+ * switch to yarn
+
 1.0.1 / 2017-02-19
 ==================
 

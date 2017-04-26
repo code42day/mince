@@ -14,8 +14,10 @@ var argv = require('optimist')
 
 var mincer = require('mincer');
 var DebugComments = require('./lib/debug-comments.js');
+var RemoveProcessingDirectives = require('./lib/remove-processing-directives.js');
 
 mincer.registerPostProcessor('application/javascript', DebugComments);
+mincer.registerPostProcessor('application/javascript', RemoveProcessingDirectives);
 
 function toArray(a) {
   return Array.isArray(a) ? a : [a];
@@ -36,37 +38,50 @@ function environment(include) {
   return environment;
 }
 
-function writeFile(path, data) {
-  var output = fs.createWriteStream(path);
-  data.split('\n').forEach(function(line) {
-    // remove processing directives
-    if (!line.startsWith('//(=)')) {
-      output.write(line);
-      output.write('\n');
-    }
-  });
-  output.end();
-}
+function mince(environment, src, destination, fn) {
+  var operations;
 
-function mince(environment, src, destination) {
+  function done(err) {
+    if (err) {
+      operations = -1;
+      // only notify about the first error
+      return fn(err);
+    }
+    if (--operations === 0) {
+      // we are done here
+      fn();
+    }
+  }
+
   src = toArray(src);
+  operations += src.length;
+
   src.forEach(function(s) {
     var asset = environment.findAsset(s);
     if (!asset) {
       throw 'Cannot find: ' + s;
     }
+
     var outName = path.join(destination, s);
-    var sourceMappingComment = '';
+    var source = asset.toString();
+
     if (argv['source-map'] && asset.sourceMap) {
-      sourceMappingComment = '\n//# sourceMappingURL=' + s + '.map';
-      fs.writeFile(outName + '.map', asset.sourceMap);
+      operations += 1;
+      source += '\n//# sourceMappingURL=' + s + '.map';
+      fs.writeFile(outName + '.map', asset.sourceMap, done);
     }
-    writeFile(outName, asset.toString() + sourceMappingComment);
+
+    fs.writeFile(outName, source, done);
   });
 }
 
 try {
-  mince(environment(argv.include), argv._, argv.destination);
+  mince(environment(argv.include), argv._, argv.destination, function(err) {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+  });
 } catch(e) {
   console.error(e);
   process.exit(1);

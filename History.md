@@ -1,4 +1,9 @@
 
+1.1.1 / 2017-04-25
+==================
+
+ * add postprocessor for removing processing directives
+
 1.1.0 / 2017-04-22
 ==================
 
